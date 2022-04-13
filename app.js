@@ -1,15 +1,10 @@
 const section = document.querySelector('section');
 const playerLivesCount = document.querySelector('span');
-const playerLives = 6;
+let playerLives = 6;
 
 playerLivesCount.textContent = playerLives;
 
 // gererate data
-[
-  {
-    imgSrc: './images/beatles.jpeg',
-  },
-];
 
 let getData = () => [
   { imgSrc: './images/beatles.jpeg', id: 1, name: 'beatles' },
@@ -53,6 +48,8 @@ const cardGenerator = () => {
     // attach the info to the cards
     face.src = item.imgSrc;
 
+    card.setAttribute('name', item.name);
+
     // attach the cards to the section
     section.appendChild(card);
     card.appendChild(face);
@@ -60,8 +57,38 @@ const cardGenerator = () => {
 
     card.addEventListener('click', (e) => {
       card.classList.toggle('toggleCard');
+      checkCards(e);
     });
   });
+};
+
+// check cards
+
+const checkCards = (e) => {
+  const clickedCard = e.target;
+  clickedCard.classList.add('flipped');
+  const flippedCards = document.querySelectorAll('.flipped');
+
+  if (flippedCards.length === 2) {
+    if (
+      flippedCards[0].getAttribute('name') ===
+      flippedCards[1].getAttribute('name')
+    ) {
+      console.log('match');
+      flippedCards.forEach((card) => {
+        card.classList.remove('flipped');
+        card.style.pointerEvents = 'none';
+      });
+    } else {
+      console.log('wrong');
+      flippedCards.forEach((card) => {
+        card.classList.remove('flipped');
+        setTimeout(() => card.classList.remove('toggleCard'), 1000);
+      });
+      playerLives--;
+      playerLivesCount.textContent = playerLives;
+    }
+  }
 };
 
 cardGenerator();
