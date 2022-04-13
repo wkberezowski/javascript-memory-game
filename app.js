@@ -90,14 +90,14 @@ const checkCards = (e) => {
       playerLivesCount.textContent = playerLives;
 
       if (playerLives === 0) {
-        setTimeout(() => {
-          restart('try again');
-        }, 1000);
+        restart('try again');
       }
     }
   }
   if (toggleCard.length === 16) {
-    restart('you won');
+    setTimeout(() => {
+      restart('you won');
+    }, 1000);
   }
 };
 
