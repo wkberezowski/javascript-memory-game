@@ -90,7 +90,9 @@ const checkCards = (e) => {
       playerLivesCount.textContent = playerLives;
 
       if (playerLives === 0) {
-        restart('try again');
+        setTimeout(() => {
+          restart('try again');
+        }, 1000);
       }
     }
   }
